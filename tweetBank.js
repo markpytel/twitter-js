@@ -3,7 +3,10 @@ var _ = require('underscore');
 var data = [];
 
 var add = function (name, text) {
-  data.push({ name: name, text: text });
+  data.push({ name: name, text: text,
+   img: "https://pbs.twimg.com/profile_images/2450268678/olxp11gnt09no2y2wpsh_normal.jpeg",
+    ind: data.length.toString()});
+
 };
 
 var list = function () {
@@ -33,14 +36,9 @@ var getFakeTweet = function() {
 };
 
 for(var i=0; i<10; i++) {
-  module.exports.add( getFakeName(), getFakeTweet() );
+  module.exports.add( getFakeName(), getFakeTweet());
 }
 
-
-// add('Connie', 'awesome');
-
-// console.log(data);
-// console.log(find({text: 'awesome'}));
 
 
 
