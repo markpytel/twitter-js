@@ -1,7 +1,13 @@
 var express = require( 'express' );
 var app = express(); // creates an instance of an express application
+var swig = require('swig');
+swig.setDefaults({ cache: false });
 
 var port = 3000;
+
+app.engine('html', swig.renderFile);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
 
 app.use(function (req, res, next) {
 	console.log('Response status code ' + res.statusCode);
@@ -11,7 +17,10 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', function(req,res,next){
-	res.send("Welcome\n");
+	//res.send("Welcome\n");
+	var people = [{name: 'Full'}, {name: 'Stacker'}, {name: 'Son'}];
+	res.render( 'index', {title: 'Hall of Fame', people: people} );
+
 
 });
 
