@@ -5,18 +5,19 @@ var tweetBank = require('./tweetBank');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var routes = require('./routes/');
+var socketio = require('socket.io');
+
 swig.setDefaults({ cache: false });
 
 var port = 3000;
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(jsonParser);
+app.use('/', routes(io));
+
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(jsonParser);
-app.use('/', routes);
-
 
 
 app.use(function (req, res, next) {
@@ -42,6 +43,9 @@ app.use(express.static(__dirname + '/public'));
 
 // });
 
-app.listen(port, function (){
+var server = app.listen(port, function (){
 	console.log('Awaiting order on port', port);
 });
+var io = socketio.listen(server);
+
+
