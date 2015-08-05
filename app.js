@@ -13,6 +13,12 @@ var port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(jsonParser);
+
+var server = app.listen(port, function (){
+	console.log('Awaiting order on port', port);
+});
+var io = socketio.listen(server);
+
 app.use('/', routes(io));
 
 app.engine('html', swig.renderFile);
@@ -43,9 +49,6 @@ app.use(express.static(__dirname + '/public'));
 
 // });
 
-var server = app.listen(port, function (){
-	console.log('Awaiting order on port', port);
-});
-var io = socketio.listen(server);
+
 
 
